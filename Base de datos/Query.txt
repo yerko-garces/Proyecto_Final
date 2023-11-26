@@ -1,0 +1,11 @@
+copy carrera(nombre, descripcion) FROM 'C:\\Universidad\\2023\\TINGESO\\Proyecto_Final\\Base de datos\\carreras.txt' DELIMITER E'\t';
+
+
+CREATE TABLE estudiante(
+	rut TEXT PRIMARY KEY,
+	nombre TEXT,
+	apellido TEXT,
+	email TEXT,
+	cod_carr INTEGER,
+	FOREIGN KEY (cod_carr) REFERENCES carrera(codigo)
+);
