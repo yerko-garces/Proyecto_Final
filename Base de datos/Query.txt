@@ -9,3 +9,5 @@ CREATE TABLE estudiante(
 	cod_carr INTEGER,
 	FOREIGN KEY (cod_carr) REFERENCES carrera(codigo)
 );
+
+copy prerrequisito(cod_prerreq, cod_asig) FROM 'C:\\Universidad\\2023\\TINGESO\\Proyecto_Final\\Base de datos\\Prerrequisitos.txt' DELIMITER E'\t';

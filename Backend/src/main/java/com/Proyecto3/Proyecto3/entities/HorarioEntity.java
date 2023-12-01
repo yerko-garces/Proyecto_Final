@@ -18,44 +18,25 @@ public class HorarioEntity {
 
     private String dia;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo1;
+    private String modulo1;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo2;
+    private String modulo2;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo3;
+    private String modulo3;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo4;
+    private String modulo4;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo5;
+    private String modulo5;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo6;
+    private String modulo6;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo7;
+    private String modulo7;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo8;
+    private String modulo8;
 
-    @OneToOne
-    @JoinColumn(name = "cod_asig")
-    private PlanEstudioEntity modulo9;
+    private String modulo9;
 
-    @OneToOne
-    @JoinColumn(name = "rut")
+    @ManyToOne(optional = true)
     private EstudianteEntity rut_estudiante;
 
 }

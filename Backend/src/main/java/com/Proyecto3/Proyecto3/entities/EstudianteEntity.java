@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Entity
 @Table(name = "estudiante")
@@ -21,8 +22,13 @@ public class EstudianteEntity {
 
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "cod_carr")
-    CarreraEntity codigo_carrera;
+    @ManyToOne(optional = true)
+    private CarreraEntity codigo_carrera;
+
+    @OneToMany
+    private List<NotaEntity> notas;
+
+    @OneToMany
+    private List<HorarioEntity> horarios;
 
 }

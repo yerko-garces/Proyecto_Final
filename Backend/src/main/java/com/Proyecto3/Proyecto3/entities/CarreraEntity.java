@@ -1,11 +1,10 @@
 package com.Proyecto3.Proyecto3.entities;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "carrera")
@@ -16,8 +15,14 @@ public class CarreraEntity {
 
     @Id
     @Column(unique = true, nullable = false)
-    private Long codigo;
+    private Long cod_carr;
 
     private String nombre;
+
+    @OneToMany
+    private List<EstudianteEntity> estudiantes;
+
+    @OneToMany
+    private List<PlanEstudioEntity> planes;
 
 }
