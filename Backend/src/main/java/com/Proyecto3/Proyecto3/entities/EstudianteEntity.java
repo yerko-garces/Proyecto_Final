@@ -22,7 +22,7 @@ public class EstudianteEntity {
 
     private String email;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     private CarreraEntity codigo_carrera;
 
     @OneToMany

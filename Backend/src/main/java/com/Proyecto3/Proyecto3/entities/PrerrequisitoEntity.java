@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "prerrquisito")
+@Table(name = "prerrequisito")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,6 +17,6 @@ public class PrerrequisitoEntity {
 
     private Long cod_prerreq;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     private PlanEstudioEntity cod_asig;
 }

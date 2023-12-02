@@ -13,7 +13,6 @@ import java.util.List;
 public class ProfesorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private String rutProfesor;
 
@@ -23,7 +22,7 @@ public class ProfesorEntity {
 
     private String email;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     private PlanEstudioEntity planClases;
 
     @OneToMany

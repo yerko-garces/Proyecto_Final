@@ -25,7 +25,7 @@ public class PlanEstudioEntity {
     @OneToMany
     private List<ProfesorEntity> profesores;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     private CarreraEntity carrera;
 
     @OneToMany

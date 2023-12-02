@@ -27,6 +27,6 @@ public class NotaEntity {
 
     private Float nota;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     private EstudianteEntity estudiante;
 }

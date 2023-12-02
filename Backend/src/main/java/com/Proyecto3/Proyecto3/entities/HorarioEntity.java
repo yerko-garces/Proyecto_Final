@@ -36,7 +36,7 @@ public class HorarioEntity {
 
     private String modulo9;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     private EstudianteEntity rut_estudiante;
 
 }
