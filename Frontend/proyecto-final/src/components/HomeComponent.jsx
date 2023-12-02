@@ -1,4 +1,3 @@
-// WelcomeView.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,8 +9,12 @@ function WelcomeView() {
     navigate('/olvideContrasenia'); 
   };
 
+  const handleLoby = () => {
+    navigate('/loby'); 
+  };
 
-  const backgroundStyle = {
+
+  const estiloFondo = {
     backgroundColor: '#ADD8E6',
     minHeight: '100vh',
     display: 'flex',
@@ -40,7 +43,7 @@ function WelcomeView() {
   };
 
   return (
-    <div style={backgroundStyle}>
+    <div style={estiloFondo}>
       <div className="container card" style={containerStyle}>
         <div className="card-body">
           <h5 className="card-title">
@@ -58,7 +61,9 @@ function WelcomeView() {
           <input type="password" className="form-control" placeholder="Ingrese su contraseña" />
         </div>
         <div className="d-grid gap-2">
-          <button className="btn btn-primary mb-2 me-2">Ingresar</button>
+          <button className="btn btn-primary mb-2 me-2" onClick={handleLoby}>
+            Ingresar
+          </button>
           <button className="btn btn-secondary mb-2" onClick={handleOlvideContrasenia}>
             Olvidé mi contraseña
           </button>
