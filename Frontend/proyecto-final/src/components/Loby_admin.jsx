@@ -3,7 +3,7 @@ import { IoExitOutline } from 'react-icons/io5';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
-function LobyAdmin() {
+const LobyAdmin = () => {
   const [carrera, setCarrera] = useState('');
   const [asignatura, setAsignatura] = useState('');
   const [profesor, setProfesor] = useState('');
@@ -13,6 +13,7 @@ function LobyAdmin() {
   const [mostrarListaBloques, setMostrarListaBloques] = useState(false);
   const [mensaje, setMensaje] = useState(null);
   const [carreras, setCarreras] = useState([]);
+  const [asignaturas, setAsignaturas] = useState([]);
 
   const estiloFondo = {
     backgroundColor: '#ADD8E6',
@@ -73,6 +74,35 @@ function LobyAdmin() {
     '21:25 - 22:45',
   ];
 
+  const obtenerCodigoCarrera = async (nombreCarrera) => {
+    try {
+      const response = await fetch(`http://localhost:8090/encontrarCodigoCarrera?nombreCarrera=${nombreCarrera}`);
+      if (response.ok) {
+        const codigoCarrera = await response.json();
+        return codigoCarrera;
+      } else {
+        throw new Error('No se pudo obtener el código de carrera.');
+      }
+    } catch (error) {
+      console.error('Error al obtener el código de carrera:', error);
+      return null;
+    }
+  };
+
+  const obtenerAsignaturasPorCodigoCarrera = async (codigoCarrera) => {
+    try {
+      const response = await fetch(`http://localhost:8090/obtenerAsigPorCod?codigoCarrera=${codigoCarrera}`);
+      if (response.ok) {
+        const data = await response.json();
+        setAsignaturas(data);
+      } else {
+        throw new Error('No se pudieron obtener las asignaturas.');
+      }
+    } catch (error) {
+      console.error('Error al obtener las asignaturas:', error);
+    }
+  };
+
   useEffect(() => {
     fetch('http://localhost:8090/nombresCarreras')
       .then((response) => response.json())
@@ -102,7 +132,21 @@ function LobyAdmin() {
     setMostrarListaBloques(false);
   };
 
-  const handleFormSubmit = (event) => {
+  const handleCarreraChange = async (selectedCarrera) => {
+    setCarrera(selectedCarrera);
+    if (selectedCarrera) {
+      const codigoCarrera = await obtenerCodigoCarrera(selectedCarrera);
+      if (codigoCarrera !== null) {
+        await obtenerAsignaturasPorCodigoCarrera(codigoCarrera);
+      } else {
+        console.error('No se pudo obtener el código de carrera.');
+      }
+    } else {
+      setAsignaturas([]); 
+    }
+  };
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     if (
@@ -116,32 +160,37 @@ function LobyAdmin() {
       return;
     }
 
-    const nuevoHorario = {
-      nombreCarrera: carrera,
-      nombreAsignatura: asignatura,
-      nombreProfesor: profesor,
-      dia: diaSeleccionado,
-      bloque: bloqueSeleccionado,
-    };
+    const codigoCarrera = await obtenerCodigoCarrera(carrera);
+    if (codigoCarrera !== null) {
+      const nuevoHorario = {
+        codigoCarrera: codigoCarrera,
+        nombreAsignatura: asignatura,
+        nombreProfesor: profesor,
+        dia: diaSeleccionado,
+        bloque: bloqueSeleccionado,
+      };
 
-    fetch('http://localhost:8090/guardarHorarioSelec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(nuevoHorario),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setMensaje('Se ha agregado correctamente');
-        } else {
-          setMensaje('Ha ocurrido un error. Verifique los datos');
-        }
+      fetch('http://localhost:8090/guardarHorarioSelec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoHorario),
       })
-      .catch((error) => {
-        console.error('Error en la solicitud:', error);
-        setMensaje('Ha ocurrido un error. Verifique los datos');
-      });
+        .then((response) => {
+          if (response.ok) {
+            setMensaje('Se ha agregado correctamente');
+          } else {
+            setMensaje('Ha ocurrido un error. Verifique los datos');
+          }
+        })
+        .catch((error) => {
+          console.error('Error en la solicitud:', error);
+          setMensaje('Ha ocurrido un error. Verifique los datos');
+        });
+    } else {
+      setMensaje('No se pudo obtener el código de carrera. Verifique los datos.');
+    }
   };
 
   return (
@@ -169,7 +218,7 @@ function LobyAdmin() {
             <select
               className="form-select"
               value={carrera}
-              onChange={(e) => setCarrera(e.target.value)}
+              onChange={(e) => handleCarreraChange(e.target.value)}
             >
               <option value="">Seleccione una carrera</option>
               {carreras.map((carrera, index) => (
@@ -183,12 +232,18 @@ function LobyAdmin() {
             <label htmlFor="asignatura" className="form-label">
               Asignatura:
             </label>
-            <input
-              type="text"
-              className="form-control"
-              id="asignatura"
+            <select
+              className="form-select"
+              value={asignatura}
               onChange={(e) => setAsignatura(e.target.value)}
-            />
+            >
+              <option value="">Seleccione una asignatura</option>
+              {asignaturas.map((asignatura, index) => (
+                <option key={index} value={asignatura}>
+                  {asignatura}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="profesor" className="form-label">
@@ -267,6 +322,6 @@ function LobyAdmin() {
       )}
     </div>
   );
-}
+};
 
 export default LobyAdmin;

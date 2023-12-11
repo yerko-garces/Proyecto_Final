@@ -19,4 +19,13 @@ public class CarreraService {
                 .map(CarreraEntity::getNombre)
                 .collect(Collectors.toList());
     }
+
+    public Long encontrarCodigoCarreraPorNombre(String nombreCarrera) {
+        CarreraEntity carrera = carreraRepository.findByNombre(nombreCarrera);
+        if (carrera != null) {
+            return carrera.getCod_carr();
+        } else {
+            return null;
+        }
+    }
 }

@@ -18,7 +18,7 @@ public class PlanEstudioEntity {
 
     private String nom_asig;
 
-    private Long cod_plan;
+    private String cod_plan;
 
     private Integer nivel;
 
