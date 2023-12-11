@@ -19,10 +19,4 @@ public class CarreraEntity {
 
     private String nombre;
 
-    @OneToMany
-    private List<EstudianteEntity> estudiantes;
-
-    @OneToMany
-    private List<PlanEstudioEntity> planes;
-
 }

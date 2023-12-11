@@ -25,6 +25,4 @@ public class ProfesorEntity {
     @ManyToOne
     private PlanEstudioEntity planClases;
 
-    @OneToMany
-    private List<HorarioEntity> horarioClases;
 }

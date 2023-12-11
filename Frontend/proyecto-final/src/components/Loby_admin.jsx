@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { IoExitOutline } from 'react-icons/io5';
-import './Card.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
-function Loby() {
+function LobyAdmin() {
+  const [carrera, setCarrera] = useState('');
+  const [asignatura, setAsignatura] = useState('');
+  const [profesor, setProfesor] = useState('');
   const [diaSeleccionado, setDiaSeleccionado] = useState('');
   const [mostrarListaDias, setMostrarListaDias] = useState(false);
   const [bloqueSeleccionado, setBloqueSeleccionado] = useState('');
   const [mostrarListaBloques, setMostrarListaBloques] = useState(false);
+  const [mensaje, setMensaje] = useState(null);
 
   const estiloFondo = {
     backgroundColor: '#ADD8E6',
@@ -46,10 +49,6 @@ function Loby() {
     marginBottom: '20px',
     width: '80%',
     maxWidth: '600px',
-  };
-
-  const inputContainerStyle = {
-    marginBottom: '10px',
   };
 
   const diasSemana = [
@@ -91,38 +90,103 @@ function Loby() {
     setMostrarListaBloques(false);
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    if (
+      carrera.trim() === '' ||
+      asignatura.trim() === '' ||
+      profesor.trim() === '' ||
+      diaSeleccionado === '' ||
+      bloqueSeleccionado === ''
+    ) {
+      setMensaje('Todos los campos son obligatorios');
+      return;
+    }
+
+    const nuevoHorario = {
+      nombreCarrera: carrera,
+      nombreAsignatura: asignatura,
+      nombreProfesor: profesor,
+      dia: diaSeleccionado,
+      bloque: bloqueSeleccionado,
+    };
+
+    fetch('http://localhost:8090/guardarHorarioSelec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(nuevoHorario),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setMensaje('Se ha agregado correctamente');
+        } else {
+          setMensaje('Ha ocurrido un error. Verifique los datos');
+        }
+      })
+      .catch((error) => {
+        console.error('Error en la solicitud:', error);
+        setMensaje('Ha ocurrido un error. Verifique los datos');
+      });
+  };
+
   return (
     <div style={estiloFondo}>
       <Link to="/" style={salirEstilo}>
-        SALIR DE LA <br/> APLICACION
+        SALIR DE LA <br /> APLICACION
         <IoExitOutline size={30} style={iconoEstilo} />
       </Link>
       <div className="container card" style={containerStyle}>
         <div className="card-body">
           <h5 className="card-title">
             BIENVENIDOS A LA ASIGNACION <br />
-            DE ASIGNATURAS,  <br />
+            DE ASIGNATURAS, <br />
             PROFESORES Y DIAS.
           </h5>
         </div>
       </div>
       <div className="container mt-4">
         <h2>Llene los siguientes campos para agregar un nuevo horario:</h2>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <div className="mb-3">
-            <label htmlFor="carrera" className="form-label">Carrera:</label>
-            <input type="text" className="form-control" id="carrera" />
+            <label htmlFor="carrera" className="form-label">
+              Carrera:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="carrera"
+              onChange={(e) => setCarrera(e.target.value)}
+            />
           </div>
           <div className="mb-3">
-            <label htmlFor="asignatura" className="form-label">Asignatura:</label>
-            <input type="text" className="form-control" id="asignatura" />
+            <label htmlFor="asignatura" className="form-label">
+              Asignatura:
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="asignatura"
+              onChange={(e) => setAsignatura(e.target.value)}
+            />
           </div>
           <div className="mb-3">
-            <label htmlFor="profesor" className="form-label">Profesor(a):</label>
-            <input type="text" className="form-control" id="profesor" />
+            <label htmlFor="profesor" className="form-label">
+              Profesor(a):
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="profesor"
+              onChange={(e) => setProfesor(e.target.value)}
+            />
           </div>
           <div className="mb-3">
-            <label htmlFor="dia" className="form-label">Día:</label>
+            <label htmlFor="dia" className="form-label">
+              Día:
+            </label>
             <div className="dropdown">
               <input
                 type="text"
@@ -144,7 +208,9 @@ function Loby() {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="bloque" className="form-label">Bloque:</label>
+            <label htmlFor="bloque" className="form-label">
+              Bloque:
+            </label>
             <div className="dropdown">
               <input
                 type="text"
@@ -165,11 +231,24 @@ function Loby() {
               )}
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">Asignar</button>
+          <button type="submit" className="btn btn-primary">
+            Asignar
+          </button>
         </form>
       </div>
+      {mensaje && (
+        <div className="alert alert-dismissible alert-success" role="alert">
+          <p>{mensaje}</p>
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => setMensaje(null)}
+          ></button>
+        </div>
+      )}
     </div>
   );
 }
 
-export default Loby;
+export default LobyAdmin;

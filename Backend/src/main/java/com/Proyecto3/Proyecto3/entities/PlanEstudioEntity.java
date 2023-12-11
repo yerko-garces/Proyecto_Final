@@ -22,13 +22,8 @@ public class PlanEstudioEntity {
 
     private Integer nivel;
 
-    @OneToMany
-    private List<ProfesorEntity> profesores;
-
     @ManyToOne
     private CarreraEntity carrera;
 
-    @OneToMany
-    private List<PrerrequisitoEntity> prerrquisitos;
 
 }

@@ -5,7 +5,8 @@ import OlvideContrasenia from './components/OlvideContrasenia';
 import Loby from './components/Loby'
 import Loby_admin from './components/Loby_admin'
 import HorarioAlumno from './components/HorarioAlumno'
-import Card from './components/Card';
+import Seleccion from './components/Seleccion'
+import Preguntas from './components/Preguntas'
 import './App.css';
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
           <Route path="/loby" element={<Loby />} />
           <Route path="/loby_admin" element={<Loby_admin />} />
           <Route path="/horario_alumno" element={<HorarioAlumno />} />
+          <Route path="/seleccion" element={<Seleccion />} />
+          <Route path="/preguntas" element={<Preguntas />} />
         </Routes>
       </BrowserRouter>
     </div>

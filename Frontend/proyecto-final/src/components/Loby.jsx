@@ -41,24 +41,24 @@ function Loby() {
     alignItems: 'flex-start',
     gap: '20px',
     width: '100%',
-    maxWidth: '800px', // Ancho máximo para limitar el espacio entre las columnas
-    margin: '0 auto', // Centra el contenedor
+    maxWidth: '800px', 
+    margin: '0 auto',
   };
 
   const column = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    flex: '1', // Toma igual cantidad de espacio en la columna
+    flex: '1', 
   };
 
   const space = {
-    height: '20px', // Altura del espacio entre las Card
-    width: '100%', // Opcional: ajusta el ancho del espacio
+    height: '20px', 
+    width: '100%', 
   };
 
   const cardStyle = {
-    marginBottom: '20px', // Espacio entre los Card
+    marginBottom: '20px', 
   };
 
   return (
@@ -70,14 +70,14 @@ function Loby() {
       <h1>BIENVENIDO ALUMNO(A) </h1>
       <div style={cardsContainer}>
         <div style={column}>
-          <Card path="/" titulo="SELECCIÓN DE HORARIO" descripcion="Pagina en la que el alumno puede realizar la toma de ramos, es decir, seleccionar sus horarios" style={cardStyle} />
+          <Card path="/Seleccion" titulo="SELECCIÓN DE HORARIO" descripcion="Pagina en la que el alumno puede realizar la toma de ramos, es decir, seleccionar sus horarios" style={cardStyle} />
           <div style={space} />
           <Card path="/" titulo="REGLAS DE HORARIO" descripcion="Reglas para la selección de horarios" style={cardStyle} />
         </div>
         <div style={column}>
           <Card path="/horario_alumno" titulo="HORARIO DEL ALUMNO(A)" descripcion="Horario de clases actual del alumno" style={cardStyle} />
           <div style={space} />
-          <Card path="/" titulo="PREGUNTAS FRECUENTES" descripcion="Preguntas frecuentes sobre la toma de ramos" style={cardStyle} />
+          <Card path="/preguntas" titulo="PREGUNTAS FRECUENTES" descripcion="Preguntas frecuentes sobre la toma de ramos" style={cardStyle} />
         </div>
       </div>
     </div>

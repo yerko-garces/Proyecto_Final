@@ -23,12 +23,6 @@ public class EstudianteEntity {
     private String email;
 
     @ManyToOne
-    private CarreraEntity codigo_carrera;
-
-    @OneToMany
-    private List<NotaEntity> notas;
-
-    @OneToMany
-    private List<HorarioEntity> horarios;
+    private CarreraEntity cod_carr;
 
 }

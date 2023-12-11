@@ -6,7 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 function WelcomeView() {
   const navigate = useNavigate();
   const [rut, setRut] = useState('');
-  const [email, setEmail] = useState(''); 
+  const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -15,10 +15,12 @@ function WelcomeView() {
   };
 
   const handleLoby = () => {
+    localStorage.setItem('rut', rut);
     navigate('/loby');
   };
 
   const handleLobyAdmin = () => {
+    localStorage.setItem('rut', rut);
     navigate('/loby_admin');
   };
 
@@ -26,7 +28,7 @@ function WelcomeView() {
 
   const handleIngresar = async () => {
     try {
-      if (!rut || !email) { 
+      if (!rut || !email) {
         setShowModal(true);
         setErrorMsg('Por favor, ingrese su RUT y email.');
         return;
@@ -34,16 +36,17 @@ function WelcomeView() {
 
       if (rut.toUpperCase() === 'ADMIN' && email.toUpperCase() === 'ADMIN') {
         handleLobyAdmin();
-      } else {
-        const response = await fetch(`/verificarRutEmail?rut=${rut}&email=${email}`); 
-        const data = await response.text(); // Recibir texto directamente
+        return;
+      }
 
-        if (data === 'true') {
-          handleLobyAdmin();
-        } else {
-          setShowModal(true);
-          setErrorMsg('No se pudo acceder, verifique sus datos.');
-        }
+      const response = await fetch(`http://localhost:8090/verificarRutEmail?rut=${rut}&email=${email}`);
+      const data = await response.text();
+
+      if (data === 'true') {
+        handleLoby();
+      } else {
+        setShowModal(true);
+        setErrorMsg('No se pudo acceder, verifique sus datos.');
       }
     } catch (error) {
       console.error('Hubo un error al realizar la solicitud:', error);
@@ -52,28 +55,33 @@ function WelcomeView() {
 
   return (
     <div>
-      <div style={{
-        backgroundColor: '#ADD8E6',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingBottom: '50px',
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-      }}>
-        <div className="container card" style={{
-          backgroundColor: 'white',
-          padding: '20px',
-          textAlign: 'center',
-          marginBottom: '20px',
-          width: '80%',
-          maxWidth: '600px',
-        }}>
+      <div
+        style={{
+          backgroundColor: '#ADD8E6',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingBottom: '50px',
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          right: '0',
+          bottom: '0',
+        }}
+      >
+        <div
+          className="container card"
+          style={{
+            backgroundColor: 'white',
+            padding: '20px',
+            textAlign: 'center',
+            marginBottom: '20px',
+            width: '80%',
+            maxWidth: '600px',
+          }}
+        >
           <div className="card-body">
             <h5 className="card-title">
               BIENVENIDOS AL PORTAL <br />
@@ -87,18 +95,18 @@ function WelcomeView() {
             <input
               type="text"
               className="form-control"
-              placeholder="Ingrese su RUT" 
-              value={rut} 
-              onChange={(e) => setRut(e.target.value)} 
+              placeholder="Ingrese su RUT"
+              value={rut}
+              onChange={(e) => setRut(e.target.value)}
             />
           </div>
           <div className="mb-3" style={{ marginBottom: '10px' }}>
             <input
-              type="text" 
+              type="text"
               className="form-control"
-              placeholder="Ingrese su email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
+              placeholder="Ingrese su email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="d-grid gap-2">
@@ -116,9 +124,7 @@ function WelcomeView() {
         <Modal.Header closeButton>
           <Modal.Title>Error</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {errorMsg}
-        </Modal.Body>
+        <Modal.Body>{errorMsg}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Cerrar
