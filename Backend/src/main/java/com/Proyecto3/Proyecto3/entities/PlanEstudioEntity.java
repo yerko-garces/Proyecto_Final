@@ -22,8 +22,7 @@ public class PlanEstudioEntity {
 
     private Integer nivel;
 
-    @ManyToOne
-    private CarreraEntity carrera;
+    private Long codCarr;
 
 
 }

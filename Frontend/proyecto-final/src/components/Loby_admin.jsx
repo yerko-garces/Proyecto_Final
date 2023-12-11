@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoExitOutline } from 'react-icons/io5';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ function LobyAdmin() {
   const [bloqueSeleccionado, setBloqueSeleccionado] = useState('');
   const [mostrarListaBloques, setMostrarListaBloques] = useState(false);
   const [mensaje, setMensaje] = useState(null);
+  const [carreras, setCarreras] = useState([]);
 
   const estiloFondo = {
     backgroundColor: '#ADD8E6',
@@ -71,6 +72,17 @@ function LobyAdmin() {
     '20:05 - 21:25',
     '21:25 - 22:45',
   ];
+
+  useEffect(() => {
+    fetch('http://localhost:8090/nombresCarreras')
+      .then((response) => response.json())
+      .then((data) => {
+        setCarreras(data);
+      })
+      .catch((error) => {
+        console.error('Error al obtener nombres de carreras:', error);
+      });
+  }, []);
 
   const handleMostrarListaDias = () => {
     setMostrarListaDias(!mostrarListaDias);
@@ -154,12 +166,18 @@ function LobyAdmin() {
             <label htmlFor="carrera" className="form-label">
               Carrera:
             </label>
-            <input
-              type="text"
-              className="form-control"
-              id="carrera"
+            <select
+              className="form-select"
+              value={carrera}
               onChange={(e) => setCarrera(e.target.value)}
-            />
+            >
+              <option value="">Seleccione una carrera</option>
+              {carreras.map((carrera, index) => (
+                <option key={index} value={carrera}>
+                  {carrera}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="asignatura" className="form-label">
