@@ -164,6 +164,7 @@ const LobyAdmin = () => {
     if (codigoCarrera !== null) {
       const nuevoHorario = {
         codigoCarrera: codigoCarrera,
+        nombreCarrera: carrera,
         nombreAsignatura: asignatura,
         nombreProfesor: profesor,
         dia: diaSeleccionado,
@@ -212,7 +213,7 @@ const LobyAdmin = () => {
         <h2>Llene los siguientes campos para agregar un nuevo horario:</h2>
         <form onSubmit={handleFormSubmit}>
           <div className="mb-3">
-            <label htmlFor="carrera" className="form-label">
+          <label htmlFor="carrera" className="form-label">
               Carrera:
             </label>
             <select

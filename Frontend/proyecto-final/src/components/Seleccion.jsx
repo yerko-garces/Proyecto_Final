@@ -7,6 +7,19 @@ function Seleccion() {
   const [codigoCarrera, setCodigoCarrera] = useState(null);
   const [asignaturas, setAsignaturas] = useState([]);
   const [selectedAsignatura, setSelectedAsignatura] = useState('');
+  const [horarios, setHorarios] = useState([]);
+  const [selectedHorario, setSelectedHorario] = useState('');
+  const [horarioEnBlanco, setHorarioEnBlanco] = useState([
+    ['08:15 - 09:35', '', '', '', '', '', ''],
+    ['09:50 - 11:10', '', '', '', '', '', ''],
+    ['11:25 - 12:45', '', '', '', '', '', ''],
+    ['13:45 - 15:05', '', '', '', '', '', ''],
+    ['15:20 - 16:40', '', '', '', '', '', ''],
+    ['16:55 - 18:15', '', '', '', '', '', ''],
+    ['18:45 - 20:05', '', '', '', '', '', ''],
+    ['20:05 - 21:25', '', '', '', '', '', ''],
+    ['21:25 - 22:45', '', '', '', '', '', ''],
+  ]);
 
   useEffect(() => {
     const obtenerCodigoCarrera = async () => {
@@ -41,6 +54,87 @@ function Seleccion() {
       }
     } catch (error) {
       console.error('Error:', error);
+    }
+  };
+
+  const obtenerHorarios = async () => {
+    try {
+      const response = await fetch(`http://localhost:8090/buscarPorAsignatura?nombreAsignatura=${selectedAsignatura}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        setHorarios(data);
+      } else {
+        throw new Error('Error al obtener los horarios');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedAsignatura !== '') {
+      obtenerHorarios();
+    }
+  }, [selectedAsignatura]);
+
+  const actualizarHorarioEnBlanco = () => {
+    const nuevoHorarioEnBlanco = [...horarioEnBlanco];
+    const [_, dia, bloque] = selectedHorario.split(', ');
+  
+    console.log('Día:', dia, 'Índice de Día:', obtenerIndiceDia(dia));
+    console.log('Bloque:', bloque, 'Índice de Bloque:', obtenerIndiceBloque(bloque));
+  
+    const diaIndex = obtenerIndiceDia(dia);
+    const bloqueIndex = obtenerIndiceBloque(bloque);
+  
+    if (diaIndex !== -1 && bloqueIndex !== -1) {
+      nuevoHorarioEnBlanco[bloqueIndex][diaIndex] = selectedAsignatura;
+      setHorarioEnBlanco(nuevoHorarioEnBlanco);
+    }
+  };
+
+  const obtenerIndiceDia = (dia) => {
+    switch (dia) {
+      case 'Lunes':
+        return 1;
+      case 'Martes':
+        return 2;
+      case 'Miércoles':
+        return 3;
+      case 'Jueves':
+        return 4;
+      case 'Viernes':
+        return 5;
+      case 'Sábado':
+        return 6;
+      default:
+        return -1;
+    }
+  };
+
+  const obtenerIndiceBloque = (bloque) => {
+    switch (bloque) {
+      case '08:15 - 09:35':
+        return 0;
+      case '09:50 - 11:10':
+        return 1;
+      case '11:25 - 12:45':
+        return 2;
+      case '13:45 - 15:05':
+        return 3;
+      case '15:20 - 16:40':
+        return 4;
+      case '16:55 - 18:15':
+        return 5;
+      case '18:45 - 20:05':
+        return 6;
+      case '20:05 - 21:25':
+        return 7;
+      case '21:25 - 22:45':
+        return 8;
+      default:
+        return -1;
     }
   };
 
@@ -95,13 +189,6 @@ function Seleccion() {
     margin: '10px',
   };
 
-  const horarioStyle = {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  };
-
   return (
     <div style={estiloFondo}>
       <Link
@@ -143,9 +230,25 @@ function Seleccion() {
             ))}
           </select>
           <label htmlFor="horario">Horario:</label>
-          <input type="text" id="horario" className="form-control" />
+          <select
+            id="horario"
+            className="form-control"
+            value={selectedHorario}
+            onChange={(e) => setSelectedHorario(e.target.value)}
+          >
+            <option value="">Selecciona un horario</option>
+            {horarios.map((horario, index) => (
+              <option key={index} value={`${horario[0]}, ${horario[1]}, ${horario[2]}`}>
+                {`${horario[0]}, ${horario[1]}, ${horario[2]}`}
+              </option>
+            ))}
+          </select>
           <div style={formularioButtonStyle}>
-            <button className="btn btn-primary" style={formularioButtonStyle}>
+            <button
+              className="btn btn-primary"
+              style={formularioButtonStyle}
+              onClick={actualizarHorarioEnBlanco}
+            >
               Visualizar
             </button>
             <button className="btn btn-success" style={formularioButtonStyle}>
@@ -153,34 +256,31 @@ function Seleccion() {
             </button>
           </div>
         </div>
-        <div className="container card">
-          <table className="table table-bordered text-center" style={horarioStyle}>
-            <thead>
-              <tr>
-                <th scope="col">Bloque</th>
-                <th scope="col">Lunes</th>
-                <th scope="col">Martes</th>
-                <th scope="col">Miércoles</th>
-                <th scope="col">Jueves</th>
-                <th scope="col">Viernes</th>
-                <th scope="col">Sábado</th>
+      </div>
+      <div className="container card" style={{ ...containerStyle, marginTop: '20px' }}>
+        <h3>Horario en blanco</h3>
+        <table className="table table-bordered text-center">
+          <thead className="table-dark">
+            <tr>
+              <th scope="col">Bloque</th>
+              <th scope="col">Lunes</th>
+              <th scope="col">Martes</th>
+              <th scope="col">Miércoles</th>
+              <th scope="col">Jueves</th>
+              <th scope="col">Viernes</th>
+              <th scope="col">Sábado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {horarioEnBlanco.map((fila, index) => (
+              <tr key={index}>
+                {fila.map((elemento, idx) => (
+                  <td key={idx}>{elemento}</td>
+                ))}
               </tr>
-            </thead>
-            <tbody>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((bloque) => (
-                <tr key={bloque}>
-                  <td>{bloque}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
