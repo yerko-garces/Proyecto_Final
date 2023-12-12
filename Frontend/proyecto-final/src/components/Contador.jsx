@@ -11,7 +11,7 @@ const Contador = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8090/contarPorNombreAsignatura?nombreAsignatura=${asignatura}`);
+      const response = await fetch(`http://localhost:8090/contarEstudiantes?nombreRamo=${asignatura}`);
       if (response.ok) {
         const cantidad = await response.json();
         setMensaje(`La cantidad de alumnos inscritos en ${asignatura} es: ${cantidad}`);

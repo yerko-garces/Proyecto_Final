@@ -9,6 +9,7 @@ function Seleccion() {
   const [selectedAsignatura, setSelectedAsignatura] = useState('');
   const [horarios, setHorarios] = useState([]);
   const [selectedHorario, setSelectedHorario] = useState('');
+  const [guardadoCorrectamente, setGuardadoCorrectamente] = useState(false);
   const [horarioEnBlanco, setHorarioEnBlanco] = useState([
     ['08:15 - 09:35', '', '', '', '', '', ''],
     ['09:50 - 11:10', '', '', '', '', '', ''],
@@ -83,7 +84,7 @@ function Seleccion() {
   
     if (selectedAsignatura.trim() === '') {
       console.log('No se ha seleccionado ninguna asignatura.');
-      return; // Evita enviar si no hay asignatura seleccionada
+      return; 
     }
   
     const horariosSeleccionados = [];
@@ -122,6 +123,7 @@ function Seleccion() {
           throw new Error('Error al guardar el horario' + response.status);
         }
       }
+      setGuardadoCorrectamente(true);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -348,7 +350,7 @@ function Seleccion() {
         </div>
       </div>
       <div className="container card" style={{ ...containerStyle, marginTop: '20px' }}>
-        <h3>Horario en blanco</h3>
+        <h3>POSIBLE HORARIO</h3>
         <table className="table table-bordered text-center">
           <thead className="table-dark">
             <tr>
@@ -372,6 +374,19 @@ function Seleccion() {
           </tbody>
         </table>
       </div>
+      {guardadoCorrectamente && (
+        <div
+          className="alert alert-success"
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+        >
+          Se ha guardado correctamente su nuevo horario.
+        </div>
+      )}
     </div>
   );
 }

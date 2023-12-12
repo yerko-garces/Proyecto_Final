@@ -29,4 +29,9 @@ public class HorarioController {
     public List<HorarioEntity> obtenerHorariosPorRutEstudiante(@RequestParam String rut) {
         return horarioService.obtenerHorariosPorRutEstudiante(rut);
     }
+
+    @GetMapping("/contarEstudiantes")
+    public long contarEstudiantesUnicosPorNombreRamo(@RequestParam String nombreRamo) {
+        return horarioService.contarEstudiantesUnicosPorNombreRamo(nombreRamo);
+    }
 }

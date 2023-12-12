@@ -42,9 +42,8 @@ function Preguntas() {
   };
 
   const preguntas = [
-    { pregunta: 'Pregunta 1', respuesta: 'Respuesta a la Pregunta 1.' },
-    { pregunta: 'Pregunta 2', respuesta: 'Respuesta a la Pregunta 2.' },
-    // Agrega más preguntas y respuestas aquí
+    { pregunta: '¿Cuantos ramos como minimo tengo que tomar por semestre?', respuesta: 'Como minimo debe tomar 3 ramos, a menos que no tenga mas ramos para dar dicho semestre.' },
+    { pregunta: '¿Cuantas veces puedo reprobar un ramo?', respuesta: 'Se puede reprobar solo una vez, ya que la segunda sera causal de expulsion.' },
   ];
 
   const toggleAccordion = (index) => {

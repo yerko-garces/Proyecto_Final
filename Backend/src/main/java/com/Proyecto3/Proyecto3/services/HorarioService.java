@@ -21,4 +21,8 @@ public class HorarioService {
     public List<HorarioEntity> obtenerHorariosPorRutEstudiante(String rutEstudiante) {
         return horarioRepository.findByRutEstudiante(rutEstudiante);
     }
+
+    public long contarEstudiantesUnicosPorNombreRamo(String nombreRamo) {
+        return horarioRepository.contarEstudiantesUnicosPorNombreRamo(nombreRamo);
+    }
 }
