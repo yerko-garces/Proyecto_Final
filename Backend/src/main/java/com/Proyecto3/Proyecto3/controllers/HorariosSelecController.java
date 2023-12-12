@@ -25,4 +25,9 @@ public class HorariosSelecController {
     public List<HorariosSeleccionados> getAllHorariosSeleccionados() {
         return horariosSelecService.getAllHorariosSeleccionados();
     }
+
+    @GetMapping("/buscarPorAsignatura")
+    public List<Object[]> findInfoByNombreAsignatura(@RequestParam String nombreAsignatura) {
+        return horariosSelecService.findInfoByNombreAsignatura(nombreAsignatura);
+    }
 }

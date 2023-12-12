@@ -19,4 +19,8 @@ public class PlanEstudioService {
                 .map(PlanEstudioEntity::getNom_asig)
                 .collect(Collectors.toList());
     }
+
+    public List<Object[]> obtenerNivelYNombrePorCodCarr(Long codigoCarrera) {
+        return planEstudioRepository.obtenerNivelYNombrePorCodCarr(codigoCarrera);
+    }
 }

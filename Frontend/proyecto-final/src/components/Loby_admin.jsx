@@ -74,6 +74,17 @@ const LobyAdmin = () => {
     '21:25 - 22:45',
   ];
 
+  const tituloStyle = {
+    fontSize: '50px',
+    marginBottom: '20px',
+    textAlign: 'center',
+    fontFamily: 'Arial, sans-serif', 
+    color: '#333', 
+    fontWeight: 'bold', 
+    textTransform: 'uppercase', 
+
+  };
+
   const obtenerCodigoCarrera = async (nombreCarrera) => {
     try {
       const response = await fetch(`http://localhost:8090/encontrarCodigoCarrera?nombreCarrera=${nombreCarrera}`);
@@ -202,7 +213,7 @@ const LobyAdmin = () => {
       </Link>
       <div className="container card" style={containerStyle}>
         <div className="card-body">
-          <h5 className="card-title">
+          <h5 className="card-title" style={tituloStyle}>
             BIENVENIDOS A LA ASIGNACION <br />
             DE ASIGNATURAS, <br />
             PROFESORES Y DIAS.

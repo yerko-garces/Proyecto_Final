@@ -61,18 +61,29 @@ function Loby() {
     marginBottom: '20px', 
   };
 
+  const tituloStyle = {
+    fontSize: '50px',
+    marginBottom: '20px',
+    textAlign: 'center',
+    fontFamily: 'Arial, sans-serif', 
+    color: '#333', 
+    fontWeight: 'bold', 
+    textTransform: 'uppercase', 
+
+  };
+
   return (
     <div style={estiloFondo}>
       <Link to="/" style={salirEstilo}>
         SALIR DE LA <br /> APLICACION
         <IoExitOutline size={30} style={iconoEstilo} />
       </Link>
-      <h1>BIENVENIDO ALUMNO(A) </h1>
+      <h1 style={tituloStyle}>BIENVENIDO ALUMNO(A) </h1>
       <div style={cardsContainer}>
         <div style={column}>
           <Card path="/Seleccion" titulo="SELECCIÓN DE HORARIO" descripcion="Pagina en la que el alumno puede realizar la toma de ramos, es decir, seleccionar sus horarios" style={cardStyle} />
           <div style={space} />
-          <Card path="/" titulo="REGLAS DE HORARIO" descripcion="Reglas para la selección de horarios" style={cardStyle} />
+          <Card path="/malla" titulo="MALLA DE LA CARRERA" descripcion="Aqui se puede ver la malla estudiantil de la carrera del alumno" style={cardStyle} />
         </div>
         <div style={column}>
           <Card path="/horario_alumno" titulo="HORARIO DEL ALUMNO(A)" descripcion="Horario de clases actual del alumno" style={cardStyle} />

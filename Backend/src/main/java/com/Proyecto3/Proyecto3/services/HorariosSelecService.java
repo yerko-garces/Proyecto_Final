@@ -19,4 +19,8 @@ public class HorariosSelecService {
     public List<HorariosSeleccionados> getAllHorariosSeleccionados() {
         return horariosSeleccionadosRepository.findAll();
     }
+
+    public List<Object[]> findInfoByNombreAsignatura(String nombreAsignatura) {
+        return horariosSeleccionadosRepository.findInfoByNombreAsignatura(nombreAsignatura);
+    }
 }

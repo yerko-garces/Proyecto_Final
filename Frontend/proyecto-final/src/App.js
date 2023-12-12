@@ -7,6 +7,7 @@ import Loby_admin from './components/Loby_admin'
 import HorarioAlumno from './components/HorarioAlumno'
 import Seleccion from './components/Seleccion'
 import Preguntas from './components/Preguntas'
+import Malla from './components/Malla'
 import './App.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/horario_alumno" element={<HorarioAlumno />} />
           <Route path="/seleccion" element={<Seleccion />} />
           <Route path="/preguntas" element={<Preguntas />} />
+          <Route path="/malla" element={<Malla />} />
         </Routes>
       </BrowserRouter>
     </div>

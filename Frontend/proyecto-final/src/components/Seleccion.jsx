@@ -78,12 +78,72 @@ function Seleccion() {
     }
   }, [selectedAsignatura]);
 
+  const enviarHorario = async () => {
+    const rutEstudiante = localStorage.getItem('rut');
+    const horarioParaEnviar = [];
+
+    for (let i = 0; i < horarioEnBlanco[0].length; i++) {
+      const dia = {
+        dia: obtenerDia(i + 1),
+      };
+
+      for (let j = 0; j < horarioEnBlanco.length; j++) {
+        const modulo = obtenerModulo(horarioEnBlanco[j][i]);
+        dia[`modulo${j + 1}`] = modulo;
+      }
+
+      dia.rutEstudiante = rutEstudiante;
+      horarioParaEnviar.push(dia);
+    }
+
+    try {
+      const response = await fetch('http://localhost:8090/crearHorario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(horarioParaEnviar),
+      });
+
+      if (response.ok) {
+        // Procesar la respuesta si es necesario
+      } else {
+        throw new Error('Error al guardar el horario');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const obtenerDia = (indice) => {
+    switch (indice) {
+      case 1:
+        return 'Lunes';
+      case 2:
+        return 'Martes';
+      case 3:
+        return 'Miércoles';
+      case 4:
+        return 'Jueves';
+      case 5:
+        return 'Viernes';
+      case 6:
+        return 'Sábado';
+      default:
+        return '';
+    }
+  };
+
+  const obtenerModulo = (valor) => {
+    if (valor === '') {
+      return 'NULL';
+    }
+    return valor;
+  };
+
   const actualizarHorarioEnBlanco = () => {
     const nuevoHorarioEnBlanco = [...horarioEnBlanco];
     const [_, dia, bloque] = selectedHorario.split(', ');
-  
-    console.log('Día:', dia, 'Índice de Día:', obtenerIndiceDia(dia));
-    console.log('Bloque:', bloque, 'Índice de Bloque:', obtenerIndiceBloque(bloque));
   
     const diaIndex = obtenerIndiceDia(dia);
     const bloqueIndex = obtenerIndiceBloque(bloque);
@@ -251,7 +311,7 @@ function Seleccion() {
             >
               Visualizar
             </button>
-            <button className="btn btn-success" style={formularioButtonStyle}>
+            <button className="btn btn-success" style={formularioButtonStyle} onClick={enviarHorario}>
               Aceptar
             </button>
           </div>

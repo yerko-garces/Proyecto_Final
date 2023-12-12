@@ -50,9 +50,14 @@ function HorarioAlumno() {
   };
 
   const tituloStyle = {
-    fontSize: '100px',
+    fontSize: '50px',
     marginBottom: '20px',
     textAlign: 'center',
+    fontFamily: 'Arial, sans-serif', 
+    color: '#333', 
+    fontWeight: 'bold', 
+    textTransform: 'uppercase', 
+
   };
 
   const horarioContainerStyle = {

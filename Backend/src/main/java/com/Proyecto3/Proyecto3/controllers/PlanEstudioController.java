@@ -19,4 +19,10 @@ public class PlanEstudioController {
     public List<String> obtenerNombresAsignaturasPorCodigoCarrera(@RequestParam Long codigoCarrera) {
         return planEstudioService.obtenerNombresAsignaturasPorCodigoCarrera(codigoCarrera);
     }
+
+    @GetMapping("/nivelYNombre")
+    @ResponseBody
+    public List<Object[]> obtenerNivelYNombrePorCodCarr(@RequestParam Long codigoCarrera) {
+        return planEstudioService.obtenerNivelYNombrePorCodCarr(codigoCarrera);
+    }
 }

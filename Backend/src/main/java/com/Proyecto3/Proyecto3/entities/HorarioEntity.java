@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "horario")
 @Data
@@ -13,30 +15,15 @@ public class HorarioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private Long id_horario;
+    @Column(name = "id_horario")
+    private Long idHorario;
+
+    private String bloque;
 
     private String dia;
 
-    private String modulo1;
+    private String rutEstudiante;
 
-    private String modulo2;
-
-    private String modulo3;
-
-    private String modulo4;
-
-    private String modulo5;
-
-    private String modulo6;
-
-    private String modulo7;
-
-    private String modulo8;
-
-    private String modulo9;
-
-    @ManyToOne
-    private EstudianteEntity rut_estudiante;
+    private String nombreRamo;
 
 }
