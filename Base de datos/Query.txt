@@ -13,3 +13,5 @@ CREATE TABLE estudiante(
 copy prerrequisito(cod_prerreq, cod_asig) FROM 'C:\\Universidad\\2023\\TINGESO\\Proyecto_Final\\Base de datos\\Prerrequisitos.txt' DELIMITER E'\t';
 
 copy estudiante(rut, apellido, email, nombre, cod_carr) FROM 'C:\\Universidad\\2023\\TINGESO\\Proyecto_Final\\Base de datos\\Estudiantes.txt' DELIMITER E'\t';
+
+DELETE FROM horario;

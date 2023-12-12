@@ -80,38 +80,75 @@ function Seleccion() {
 
   const enviarHorario = async () => {
     const rutEstudiante = localStorage.getItem('rut');
-    const horarioParaEnviar = [];
-
-    for (let i = 0; i < horarioEnBlanco[0].length; i++) {
-      const dia = {
-        dia: obtenerDia(i + 1),
-      };
-
-      for (let j = 0; j < horarioEnBlanco.length; j++) {
-        const modulo = obtenerModulo(horarioEnBlanco[j][i]);
-        dia[`modulo${j + 1}`] = modulo;
-      }
-
-      dia.rutEstudiante = rutEstudiante;
-      horarioParaEnviar.push(dia);
+  
+    if (selectedAsignatura.trim() === '') {
+      console.log('No se ha seleccionado ninguna asignatura.');
+      return; // Evita enviar si no hay asignatura seleccionada
     }
-
+  
+    const horariosSeleccionados = [];
+  
+    horarioEnBlanco.forEach((bloque, bloqueIndex) => {
+      for (let diaIndex = 1; diaIndex < bloque.length; diaIndex++) {
+        const asignatura = bloque[diaIndex];
+        if (asignatura.trim() !== '') {
+          const dia = obtenerDia(diaIndex);
+          const bloqueHorario = obtenerBloque(bloqueIndex);
+          const nombreRamo = asignatura.trim();
+  
+          const horario = {
+            dia: dia,
+            bloque: bloqueHorario,
+            rutEstudiante: rutEstudiante,
+            nombreRamo: nombreRamo,
+          };
+  
+          horariosSeleccionados.push(horario);
+        }
+      }
+    });
+  
     try {
-      const response = await fetch('http://localhost:8090/crearHorario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(horarioParaEnviar),
-      });
-
-      if (response.ok) {
-        // Procesar la respuesta si es necesario
-      } else {
-        throw new Error('Error al guardar el horario');
+      for (const horario of horariosSeleccionados) {
+        const response = await fetch('http://localhost:8090/crearHorario', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(horario),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Error al guardar el horario' + response.status);
+        }
       }
     } catch (error) {
       console.error('Error:', error);
+    }
+  };
+
+  const obtenerBloque = (bloqueIndex) => {
+    switch (bloqueIndex) {
+      case 0:
+        return '08:15 - 09:35';
+      case 1:
+        return '09:50 - 11:10';
+      case 2:
+        return '11:25 - 12:45';
+      case 3:
+        return '13:45 - 15:05';
+      case 4:
+        return '15:20 - 16:40';
+      case 5:
+        return '16:55 - 18:15';
+      case 6:
+        return '18:45 - 20:05';
+      case 7:
+        return '20:05 - 21:25';
+      case 8:
+        return '21:25 - 22:45';
+      default:
+        return '';
     }
   };
 
@@ -133,14 +170,7 @@ function Seleccion() {
         return '';
     }
   };
-
-  const obtenerModulo = (valor) => {
-    if (valor === '') {
-      return 'NULL';
-    }
-    return valor;
-  };
-
+ 
   const actualizarHorarioEnBlanco = () => {
     const nuevoHorarioEnBlanco = [...horarioEnBlanco];
     const [_, dia, bloque] = selectedHorario.split(', ');

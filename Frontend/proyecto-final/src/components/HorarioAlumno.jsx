@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineHome } from 'react-icons/ai';
 import { IoExitOutline } from 'react-icons/io5';
 
 function HorarioAlumno() {
+  const [horarios, setHorarios] = useState([]);
+  
+  useEffect(() => {
+    const rutEstudiante = localStorage.getItem('rut');
+    fetch(`http://localhost:8090/obtenerHorariosPorRut?rut=${rutEstudiante}`)
+      .then(response => response.json())
+      .then(data => {
+        setHorarios(data); 
+      })
+      .catch(error => {
+        console.error('Error obteniendo los horarios:', error);
+      });
+  }, []);
+
   const estiloFondo = {
     backgroundColor: '#ADD8E6',
     minHeight: '100vh',
@@ -29,11 +43,6 @@ function HorarioAlumno() {
     color: 'black',
   };
 
-  const iconoEstilo = {
-    marginRight: '5px',
-  };
-
-
   const linkStyle = {
     position: 'absolute',
     top: '10px',
@@ -57,7 +66,6 @@ function HorarioAlumno() {
     color: '#333', 
     fontWeight: 'bold', 
     textTransform: 'uppercase', 
-
   };
 
   const horarioContainerStyle = {
@@ -70,12 +78,12 @@ function HorarioAlumno() {
     <div style={estiloFondo}>
       <Link to="/loby" style={linkStyle}>
         <AiOutlineHome size={20} style={iconStyle} /> 
-        VOLVER AL <br /> INICIO
-      </Link>
-      <Link to="/" style={salirEstilo}>
+          VOLVER AL <br /> INICIO
+        </Link>
+        <Link to="/" style={salirEstilo}>
         SALIR DE LA <br /> APLICACION
-        <IoExitOutline size={30} style={iconoEstilo} />
-      </Link>
+        <IoExitOutline size={30} style={iconStyle} />
+        </Link>
       <h1 style={tituloStyle}>HORARIO</h1>
       <div className="container card" style={horarioContainerStyle}>
         <table className="table table-bordered text-center">
@@ -91,15 +99,15 @@ function HorarioAlumno() {
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((bloque) => (
-              <tr key={bloque}>
-                <td>{bloque}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            {horarios.map((horario, index) => (
+              <tr key={index}>
+                <td>{horario.bloque}</td>
+                <td>{horario.dia === 'Lunes' ? horario.nombreRamo : ''}</td>
+                <td>{horario.dia === 'Martes' ? horario.nombreRamo : ''}</td>
+                <td>{horario.dia === 'Miércoles' ? horario.nombreRamo : ''}</td>
+                <td>{horario.dia === 'Jueves' ? horario.nombreRamo : ''}</td>
+                <td>{horario.dia === 'Viernes' ? horario.nombreRamo : ''}</td>
+                <td>{horario.dia === 'Sábado' ? horario.nombreRamo : ''}</td>
               </tr>
             ))}
           </tbody>
