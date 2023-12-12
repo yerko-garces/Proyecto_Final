@@ -23,4 +23,8 @@ public class HorariosSelecService {
     public List<Object[]> findInfoByNombreAsignatura(String nombreAsignatura) {
         return horariosSeleccionadosRepository.findInfoByNombreAsignatura(nombreAsignatura);
     }
+
+    public Long contarPorNombreAsignatura(String nombreAsignatura) {
+        return horariosSeleccionadosRepository.countByNombreAsignatura(nombreAsignatura);
+    }
 }

@@ -21,7 +21,7 @@ function WelcomeView() {
 
   const handleLobyAdmin = () => {
     localStorage.setItem('rut', rut);
-    navigate('/loby_admin');
+    navigate('/homeAdmin');
   };
 
   const handleCloseModal = () => setShowModal(false);

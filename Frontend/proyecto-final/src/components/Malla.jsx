@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { AiOutlineHome } from 'react-icons/ai';
 import { IoExitOutline } from 'react-icons/io5';
 
-
 function MallaAlumno() {
   const [codigoCarrera, setCodigoCarrera] = useState(null);
   const [malla, setMalla] = useState([]);

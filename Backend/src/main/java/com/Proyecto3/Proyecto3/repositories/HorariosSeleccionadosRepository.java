@@ -13,5 +13,7 @@ public interface HorariosSeleccionadosRepository extends JpaRepository<HorariosS
     @Query("SELECT h.nombreProfesor, h.dia, h.bloque FROM HorariosSeleccionados h WHERE h.nombreAsignatura = :nombreAsignatura")
     List<Object[]> findInfoByNombreAsignatura(@Param("nombreAsignatura") String nombreAsignatura);
 
+    @Query("SELECT COUNT(h) FROM HorariosSeleccionados h WHERE h.nombreAsignatura = :nombreAsignatura")
+    Long countByNombreAsignatura(String nombreAsignatura);
 }
 

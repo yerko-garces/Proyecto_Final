@@ -8,6 +8,8 @@ import HorarioAlumno from './components/HorarioAlumno'
 import Seleccion from './components/Seleccion'
 import Preguntas from './components/Preguntas'
 import Malla from './components/Malla'
+import Contador from './components/Contador'
+import HomeAdmin from './components/HomeAdmin'
 import './App.css';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
           <Route path="/seleccion" element={<Seleccion />} />
           <Route path="/preguntas" element={<Preguntas />} />
           <Route path="/malla" element={<Malla />} />
+          <Route path="/contador" element={<Contador />} />
+          <Route path="/homeAdmin" element={<HomeAdmin />} />
         </Routes>
       </BrowserRouter>
     </div>

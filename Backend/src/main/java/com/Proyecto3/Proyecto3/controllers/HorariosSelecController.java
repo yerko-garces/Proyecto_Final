@@ -30,4 +30,9 @@ public class HorariosSelecController {
     public List<Object[]> findInfoByNombreAsignatura(@RequestParam String nombreAsignatura) {
         return horariosSelecService.findInfoByNombreAsignatura(nombreAsignatura);
     }
+
+    @GetMapping("/contarPorNombreAsignatura")
+    public Long contarPorNombreAsignatura(@RequestParam String nombreAsignatura) {
+        return horariosSelecService.contarPorNombreAsignatura(nombreAsignatura);
+    }
 }

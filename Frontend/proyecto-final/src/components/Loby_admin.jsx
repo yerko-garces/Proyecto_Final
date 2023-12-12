@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IoExitOutline } from 'react-icons/io5';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import { AiOutlineHome } from 'react-icons/ai';
 
 const LobyAdmin = () => {
   const [carrera, setCarrera] = useState('');
@@ -74,15 +75,19 @@ const LobyAdmin = () => {
     '21:25 - 22:45',
   ];
 
-  const tituloStyle = {
-    fontSize: '50px',
-    marginBottom: '20px',
-    textAlign: 'center',
-    fontFamily: 'Arial, sans-serif', 
-    color: '#333', 
-    fontWeight: 'bold', 
-    textTransform: 'uppercase', 
+  const linkStyle = {
+    position: 'absolute',
+    top: '10px',
+    left: '10px',
+    textDecoration: 'none',
+    color: 'black',
+    fontSize: '16px',
+    display: 'flex',
+    alignItems: 'center',
+  };
 
+  const iconStyle = {
+    marginRight: '5px',
   };
 
   const obtenerCodigoCarrera = async (nombreCarrera) => {
@@ -207,13 +212,17 @@ const LobyAdmin = () => {
 
   return (
     <div style={estiloFondo}>
+      <Link to="/homeAdmin" style={linkStyle}>
+        <AiOutlineHome size={20} style={iconStyle} />
+        VOLVER AL <br /> INICIO
+      </Link>
       <Link to="/" style={salirEstilo}>
         SALIR DE LA <br /> APLICACION
         <IoExitOutline size={30} style={iconoEstilo} />
       </Link>
       <div className="container card" style={containerStyle}>
         <div className="card-body">
-          <h5 className="card-title" style={tituloStyle}>
+          <h5 className="card-title" >
             BIENVENIDOS A LA ASIGNACION <br />
             DE ASIGNATURAS, <br />
             PROFESORES Y DIAS.
